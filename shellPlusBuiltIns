@@ -316,6 +316,22 @@ int main(int argc, char *argv[])
               checkNext == 1;
             }
           }// check for bg JID command
+          
+          for(int i=0; i<10; i++){
+
+            if(checkNext == 1){
+              if(proc[z][i] == "JID"){
+
+              }
+              else{
+                cout<<"Not a function"<<endl;
+              }
+              checkNext = 0;
+            }
+            if(proc[z][i] == "fg"){
+              checkNext == 1;
+            }
+          }// check for fg JID command
 
           for(int i=0; i<10; i++){
 
@@ -348,7 +364,16 @@ int main(int argc, char *argv[])
           for(int i=0; i<10; i++){
 
             if(proc[z][i] == "help"){
-              cout<<"gonna print some shit now"<<endl;
+              
+              ifstream helpFile ("help.txt");
+              string line;
+              if(helpFile.is_open()){
+                while(getline(helpFile, line)){
+                    cout<<line<<endl;
+                }
+                  helpFile.close();
+              }
+              
             }
             else if(proc[z][i] == "jobs"){
               cout<<"print some job malarky"<<endl;
@@ -356,7 +381,7 @@ int main(int argc, char *argv[])
 
           }//help and jobs
 
-          bool sig = false, kill = false;
+          bool sig = false, ifKill = false;
           string mySignal, p;
           for(int i=0; i<10; i++){
 
@@ -371,7 +396,7 @@ int main(int argc, char *argv[])
               }
               if(!sig){
                 p = proc[z][i];
-                mySignal = SIGTERM;
+                mySignal ="SIGTERM";
               }
             }
             else if(checkNext == 2){
@@ -380,30 +405,34 @@ int main(int argc, char *argv[])
             }
             if(proc[z][i] == "kill"){
               checkNext = 1;
-              kill = true;
+              ifKill = true;
             }
           }//kill
 
-          if(kill){
-            int pid = atoi(p.c_str());
-            if(pid <-1){
-              //do something
 
+          if(ifKill){
+            pid_t pid = (pid_t) atoi(p.c_str());
+            //kill(pid, mySignal);
+            if(mySignal == "SIGTERM"){
+              kill(pid, SIGTERM);
             }
-            else if(pid == -1){
-              //do something
-
+            else if(mySignal == "SIGKILL"){
+              kill(pid, SIGKILL);
             }
-            else if(pid == 0){
-              //do something
-
+            else if(mySignal =="SIGHUP"){
+              kill(pid, SIGHUP);
             }
+            else if(mySignal == "SIGINT"){
+              kill(pid,SIGINT);
+            }
+            //hopefully they will test using numbers?????????
             else{
-              //do something
-
+              int sig = atoi(mySignal.c_str());
+              kill(pid, sig);
             }
             //signal(mySignal, handler);
           }
+
          z++;
         }
 
