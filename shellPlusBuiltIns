@@ -334,10 +334,20 @@ int main(int argc, char *argv[])
           }// check for fg JID command
 
           for(int i=0; i<10; i++){
-
-            if(checkNext ==1){
               HOME = proc[z][i];
+              if(checkNext ==1){
+              const char* name = "HOME";
+              const char* value = proc[z][i].c_str();
+              const char* current = getenv(name);
+              cout<<current<<" to ";
+              cout<<value<<endl;
+              int j = setenv(name, value,1);
+              if(j != 0){
+                cout<<"Unable to move there"<<endl;
+              }
+              cout<<"Now in: "<<current<<endl;
               checkNext = 0;
+              
             }
             if(proc[z][i] == "cd"){
               checkNext = 1;
