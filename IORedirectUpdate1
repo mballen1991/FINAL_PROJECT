@@ -1,0 +1,160 @@
+
+string temp = "";
+string proc[10][10];
+int x = 0;
+
+int px = 0; //number of commands
+int py = 0; //number of items per command
+
+for ( int i = 0; i < parsed.length() ; i ++)
+{
+	if ( strcmp(parsed[i], "|") == 0 || i == parsed.length() -1 )
+	{
+		if ( i == parsed.length() - 1)
+		{
+			proc[px][py] = parsed[i];
+			py++;
+		}
+		
+		px++;
+	}
+	else
+	{
+		proc[px][py] = parsed[i];
+		py++;
+	}
+}
+
+cout << endl;
+cout << " ....................... reading in ......................" << endl;
+cout << endl;
+
+int z = 0
+int readInCheck = 0;
+int truncCheck = 0;
+int appendCheck = 0;
+int checkNext = 0
+string fileIn = "";
+string fileTrunc = "";
+string fileAppend = "";
+
+while ( z < px //main loop going through all of the processes
+{
+	for ( int i = 0; i < proc[z].length() ; i++) // check to see if read in is here
+	{
+		
+		if ( checkNext == 1)
+		{
+			string fileIn = proc[z][i];
+			checkNext = 0;
+		}
+		
+		if ( strcmp(proc[z][i], '<') == 0)
+		{
+			readInCheck = 1;
+			checkNext = 1;
+		}
+	}
+	
+	for ( int i = 0; i < proc[z].length() ; i++) // check to see if trunc in is here
+	{
+		
+		if ( checkNext == 1)
+		{
+			string fileTrunc = proc[z][i];
+			checkNext = 0;
+		}
+		
+		if ( strcmp(proc[z][i], '>') == 0)
+		{
+			truncCheck = 1;
+			checkNext = 1;
+		}
+	}
+	
+	for ( int i = 0; i < proc[z].length() ; i++) // check to see if append in is here
+	{
+		
+		if ( checkNext == 1)
+		{
+			string fileAppend = proc[z][i];
+			checkNext = 0;
+		}
+		
+		if ( strcmp(proc[z][i], '>>') == 0)
+		{
+			appendCheck = 1;
+			checkNext = 1;
+		}
+	}
+	
+	void miscFunction(int readInCheck, string fileIn, int truncCheck, string fileTrunc, int appendTrunc, string fileAppend)
+	{
+	
+		ofstream myfile;
+	
+		if ( readInCheck == 1)
+		{
+			
+			string newOutput;
+			//do something with fileIn
+			
+			ifstream myfile (fileIn);
+			
+			if ( myfile.is_open())
+			{
+				while ( getline(myfile, newOutput))
+				{
+					cout << newOutput << '\n';
+				}
+				myfile.close();
+				
+				cout << newOutput << endl;
+				
+			}
+			else
+			{
+				cout << "Unable to open file" <<endl;
+			}
+
+			
+		}
+		else
+		{
+			if ( truncCheck == 1)
+			{
+				//do something with fileTrunc
+				
+				
+				myfile.open(fileTrunc);
+				
+				
+				
+				//send output to file instead of screen
+				
+				myfile << "Hello world!.\n";
+				
+			}
+			else
+			{
+				if ( appendCheck == 1)
+				{
+					//do something with fileAppend
+					
+					myfile.open(fileAppend, ios_base::app);
+					myfile << "Hello world!.\n";
+				}
+				else
+				{
+					cout << "Hello world!" << endl;
+				}
+			}
+		}
+		
+		myfile.close();
+	
+	}
+	
+	z++;
+}
+
