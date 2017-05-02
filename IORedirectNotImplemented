@@ -1,0 +1,86 @@
+
+string temp = "";
+string proc[10][10];
+int x = 0;
+
+int px = 0; //number of commands
+int py = 0; //number of items per command
+
+for ( int i = 0; i < parsed.length() ; i ++)
+{
+	if ( strcmp(parsed[i], "|") == 0 || i == parsed.length() -1 )
+	{
+		if ( i == parsed.length() - 1)
+		{
+			proc[px][py] = parsed[i];
+			py++;
+		}
+		
+		px++;
+	}
+	else
+	{
+		proc[px][py] = parsed[i];
+		py++;
+	}
+}
+
+cout << endl;
+cout << " ....................... reading in ......................" << endl;
+cout << endl;
+
+int z = 0
+int readInCheck = 0;
+int checkNext = 0
+string fileIn = "";
+
+while ( z < px)
+{
+	for ( int i = 0; i < proc[z].length() ; i++) // check to see if read in is here
+	{
+		
+		if ( checkNext == 1)
+		{
+			string fileIn = proc[z][i];
+			checkNext = 0;
+		}
+		
+		if ( strcmp(proc[z][i], '<') == 0)
+		{
+			readInCheck = 1;
+			checkNext = 1;
+		}
+	}
+	
+	px--;
+}
+
+
+void miscFunction(int readInCheck, string fileIn)
+{
+	
+	if ( readInCheck == 1)
+	{
+		//do something with fileIn
+	}
+	else
+	{
+		//do normal stuff
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
